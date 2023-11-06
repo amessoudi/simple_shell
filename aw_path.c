@@ -5,7 +5,7 @@
  *
  * Return: pointer to the PATH value, or NULL if not found
  */
-static char *aw_get_path(void)
+char *aw_get_path(void)
 {
 	int aw_i = 0;
 
@@ -27,7 +27,7 @@ static char *aw_get_path(void)
  *
  * Return: full path if command is executable, NULL otherwise
  */
-static char *aw_check_access(char *aw_token, char *aw_cmd)
+char *aw_check_access(char *aw_token, char *aw_cmd)
 {
 	char *aw_full_path = malloc(1024); /* Adjust size as needed */
 
