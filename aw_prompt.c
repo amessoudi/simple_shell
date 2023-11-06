@@ -8,61 +8,67 @@
  */
 int main(int argc, char *argv[])
 {
-	char *aw_line = NULL;
-	size_t aw_len = 0;
-	ssize_t aw_nread;
-	char *aw_token;
-	char *aw_args[64];
-	int aw_i;
+    char *aw_line = NULL;
+    size_t aw_len = 0;
+    ssize_t aw_nread;
+    char *aw_token;
+    char *aw_args[64];
+    char *aw_full_path;
+    int aw_i;
 
-	(void)argc;
-	(void)argv;
+    (void)argc;
+    (void)argv;
 
-	while (1)
-	{
-		if (isatty(STDIN_FILENO) == 1)
-		{
-			write(STDOUT_FILENO, "aw$ ", 4);
-		}
+    while (1)
+    {
+        if (isatty(STDIN_FILENO) == 1)
+        {
+            write(STDOUT_FILENO, "aw$ ", 4);
+        }
 
-		aw_nread = getline(&aw_line, &aw_len, stdin);
-		if (aw_nread == -1)
-		{
-			free(aw_line);
-			if (isatty(STDIN_FILENO) == 1)
-			{
-				write(STDOUT_FILENO, "\n", 1);
-			}
-			break;
-		}
+        aw_nread = getline(&aw_line, &aw_len, stdin);
+        if (aw_nread == -1)
+        {
+            free(aw_line);
+            if (isatty(STDIN_FILENO) == 1)
+            {
+                write(STDOUT_FILENO, "\n", 1);
+            }
+            break;
+        }
 
-		aw_i = 0;
-		aw_token = strtok(aw_line, " \t\r\n\a");
-		while (aw_token != NULL)
-		{
-			aw_args[aw_i++] = aw_token;
-			if (aw_i >= 63)
-			{
-				write(STDOUT_FILENO, "Error: too many arguments\n", 26);
-				break;
-			}
-			aw_token = strtok(NULL, " \t\r\n\a");
-		}
-		aw_args[aw_i] = NULL;
+        aw_i = 0;
+        aw_token = strtok(aw_line, " \t\r\n\a");
+        while (aw_token != NULL)
+        {
+            aw_args[aw_i++] = aw_token;
+            if (aw_i >= 63)
+            {
+                write(STDOUT_FILENO, "Error: too many arguments\n", 26);
+                break;
+            }
+            aw_token = strtok(NULL, " \t\r\n\a");
+        }
+        aw_args[aw_i] = NULL;
 
-		if (aw_args[0]) /* If there's at least one token */
-		{
-			if (access(aw_args[0], F_OK) != -1)
-			{
-				aw_execute_command(aw_args[0], aw_args);
-			}
-			else
-			{
-				write(STDOUT_FILENO, aw_args[0], strlen(aw_args[0]));
-				write(STDOUT_FILENO, ": command not found\n", 20);
-			}
-		}
-	}
+        if (aw_args[0])
+        {
+            aw_full_path = aw_find_command_in_path(aw_args[0]);
+            if (aw_full_path != NULL)
+            {
+                aw_execute_command(aw_full_path, aw_args);
+                free(aw_full_path);
+            }
+            else
+            {
+                write(STDOUT_FILENO, aw_args[0], strlen(aw_args[0]));
+                write(STDOUT_FILENO, ": command not found\n", 20);
+            }
+        }
+        free(aw_line);
+        aw_line = NULL;
+        aw_len = 0;
+    }
 
-	exit(EXIT_SUCCESS);
+    exit(EXIT_SUCCESS);
 }

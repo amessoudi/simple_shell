@@ -16,16 +16,17 @@ int aw_execute_command(char *aw_cmd, char **aw_args)
 	if (aw_pid == 0)
 	{
 		/* Child process */
-		if (execve(aw_cmd, aw_args, NULL) == -1)
+		if (execve(aw_cmd, aw_args, environ) == -1)
 		{
 			perror("execve");
+			exit(EXIT_FAILURE);
 		}
-		exit(EXIT_FAILURE);
 	}
 	else if (aw_pid < 0)
 	{
 		/* Error forking */
 		perror("fork");
+		return (1);
 	}
 	else
 	{
@@ -35,5 +36,5 @@ int aw_execute_command(char *aw_cmd, char **aw_args)
 		} while (!WIFEXITED(aw_status) && !WIFSIGNALED(aw_status));
 	}
 
-	return (1);
+	return (0);
 }
