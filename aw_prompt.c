@@ -15,6 +15,7 @@ int main(int argc, char *argv[])
     char *aw_args[64];
     char *aw_full_path;
     int aw_i;
+	int aw_last_status = 0;
 
     (void)argc;
     (void)argv;
@@ -63,6 +64,7 @@ int main(int argc, char *argv[])
             {
                 write(STDOUT_FILENO, aw_args[0], strlen(aw_args[0]));
                 write(STDOUT_FILENO, ": command not found\n", 20);
+				aw_last_status = 127;
             }
         }
         free(aw_line);
@@ -70,5 +72,5 @@ int main(int argc, char *argv[])
         aw_len = 0;
     }
 
-    exit(EXIT_SUCCESS);
+    exit(aw_last_status);
 }

@@ -11,8 +11,8 @@
 extern char **environ;
 
 int aw_execute_command(char *aw_cmd, char **aw_args);
-static char *aw_get_path(void);
-static char *aw_check_access(char *aw_token, char *aw_cmd);
+char *aw_get_path(void);
+char *aw_check_access(char *aw_token, char *aw_cmd);
 char *aw_find_command_in_path(char *aw_cmd);
 
 
