@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
 			else
 			{
 				char error_message[50];
-				snprintf(error_message, sizeof(error_message), "%s: %s: not found\n", argv[0], aw_args[0]);
+				snprintf(error_message, sizeof(error_message), "%s: %d: %s: not found\n", argv[0], 1, aw_args[0]);
 				write(STDERR_FILENO, error_message, strlen(error_message));
 				aw_last_status = 127;
 			}
