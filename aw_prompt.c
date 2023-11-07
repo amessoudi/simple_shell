@@ -84,6 +84,7 @@ int main(int argc, char *argv[])
 			}
 			}
 			}
+		}
 		free(aw_line);
 		aw_line = NULL;
 		aw_len = 0;
