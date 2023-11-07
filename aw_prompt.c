@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 	char *aw_token;
 	char *aw_args[64];
 	char *aw_full_path;
-	int aw_i, command_status;
+	int aw_i;
 	int aw_last_status = 0;
 
 	(void)argc;
@@ -54,10 +54,7 @@ int main(int argc, char *argv[])
 		
 	if (aw_args[0]) 
 		{
-        command_status = aw_execute_command(aw_full_path, aw_args);
-        aw_last_status = command_status;
-            
-
+        
             if (strcmp(aw_args[0], "exit") == 0)
 			{
 				 free(aw_line);
