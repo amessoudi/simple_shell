@@ -68,11 +68,9 @@ int main(int argc, char *argv[])
 			aw_full_path = aw_find_command_in_path(aw_args[0]);
 			if (aw_full_path != NULL)
 			{
-					char error_message[50];
-        snprintf(error_message, sizeof(error_message), "%s: %d: %s: not found\n", argv[0], 1, aw_args[0]);
-        write(STDERR_FILENO, error_message, strlen(error_message));
-        aw_last_status = 127;
-         free(aw_full_path);
+					
+        	aw_execute_command(aw_full_path, aw_args);
+				free(aw_full_path);
 			}
 			else
 			{
