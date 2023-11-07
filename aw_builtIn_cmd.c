@@ -35,9 +35,10 @@ void aw_envCmd(void)
 }
 
 /* execute a built-In command function */
-void aw_executeCmd(char *command) {
+void aw_executeCmd(char *command)
+{
     int i;
-    for (i = 0; i < sizeof(aw_builtInCommands) / sizeof(aw_builtInCommands[0]); i++)
+    for (i = 0; i < (int)(sizeof(aw_builtInCommands) / sizeof(aw_builtInCommands[0])); i++)
     {
         if (strcmp(command, aw_builtInCommands[i].cmd) == 0)
         {
