@@ -51,9 +51,24 @@ int main(int argc, char *argv[])
 			aw_token = strtok(NULL, " \t\r\n\a");
 		}
 		aw_args[aw_i] = NULL;
+		
+	if (aw_args[0]) 
+		{
+            aw_executeCmd(aw_args[0]);
+
+            if (strcmp(aw_args[0], "exit") == 0)
+			{
+                exit(aw_last_status);
+            }
+			else if (strcmp(aw_args[0], "env") == 0)
+			{
+                aw_envCmd();
+            }
+			else
+			{
 
 		if (aw_args[0])
-		{
+			{
 			aw_full_path = aw_find_command_in_path(aw_args[0]);
 			if (aw_full_path != NULL)
 			{
@@ -67,7 +82,8 @@ int main(int argc, char *argv[])
 				write(STDERR_FILENO, error_message, strlen(error_message));
 				aw_last_status = 127;
 			}
-		}
+			}
+			}
 		free(aw_line);
 		aw_line = NULL;
 		aw_len = 0;
