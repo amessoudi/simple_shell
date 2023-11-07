@@ -19,7 +19,7 @@ int aw_execute_command(char *aw_cmd, char **aw_args)
 		if (execve(aw_cmd, aw_args, environ) == -1)
 		{
 			perror("execve");
-			exit(EXIT_FAILURE);
+			exit(2);
 		}
 	}
 	else if (aw_pid < 0)
@@ -36,5 +36,5 @@ int aw_execute_command(char *aw_cmd, char **aw_args)
 		} while (!WIFEXITED(aw_status) && !WIFSIGNALED(aw_status));
 	}
 
-	return (0);
+	return (WEXITSTATUS(aw_status));
 }
