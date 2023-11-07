@@ -58,11 +58,8 @@ int main(int argc, char *argv[])
 
             if (strcmp(aw_args[0], "exit") == 0)
 			{
+				 free(aw_line);
                 exit(aw_last_status);
-            }
-			else if (strcmp(aw_args[0], "env") == 0)
-			{
-                aw_envCmd();
             }
 			else
 			{
