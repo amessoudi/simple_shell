@@ -60,6 +60,10 @@ int main(int argc, char *argv[])
 				 free(aw_line);
                 exit(aw_last_status);
             }
+			else if (strcmp(aw_args[0], "env") == 0)
+			{
+                aw_envCmd();
+            }
 			else
 			{
 

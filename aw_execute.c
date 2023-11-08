@@ -11,11 +11,7 @@ int aw_execute_command(char *aw_cmd, char **aw_args)
 {
 	pid_t aw_pid;
 	int aw_status;
-if (strcmp(aw_cmd, "env") == 0) {
-        
-        aw_envCmd();
-        return 0; 
-    }
+
 	aw_pid = fork();
 	if (aw_pid == 0)
 	{
