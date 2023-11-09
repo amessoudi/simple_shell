@@ -18,7 +18,7 @@ struct aw_BuiltInCmd aw_builtInCommands[] = {
 /* exit function */
 void aw_exitCmd(void)
 {
-        exit(0);
+        exit(2);
 }
 
 /*env function */
