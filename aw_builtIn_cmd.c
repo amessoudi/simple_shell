@@ -15,13 +15,19 @@ struct aw_BuiltInCmd aw_builtInCommands[] = {
     {"env", aw_envCmd},
 };
 
-/* exit function */
+/** 
+ * aw_exitCmd - exit function 
+*/
+
 void aw_exitCmd(void)
 {
-        exit(2);
+        exit(0);
 }
 
-/*env function */
+/** 
+ * aw_envCmd - env function
+ */
+
 void aw_envCmd(void)
 {
     extern char **environ;  
@@ -34,7 +40,10 @@ void aw_envCmd(void)
     }
 }
 
-/* execute a built-In command function */
+/**
+ * aw_executeCmd - execute a built-In command function
+ */
+
 void aw_executeCmd(char *command)
 {
     int i;

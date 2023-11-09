@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
 			if (aw_full_path != NULL)
 			{
 					
-        	aw_execute_command(aw_full_path, aw_args);
+        	aw_last_status = aw_execute_command(aw_full_path, aw_args);
 				free(aw_full_path);
 			}
 			else
