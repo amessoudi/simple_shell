@@ -10,6 +10,7 @@
 
 extern char **environ;
 
+ssize_t aw_getline(char **lineptr, size_t *n, FILE *stream);
 int aw_execute_command(char *aw_cmd, char **aw_args);
 char *aw_get_path(void);
 char *aw_check_access(char *aw_token, char *aw_cmd);

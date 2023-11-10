@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
 			write(STDOUT_FILENO, "aw$ ", 4);
 		}
 
-		aw_nread = getline(&aw_line, &aw_len, stdin);
+		aw_nread = aw_getline(&aw_line, &aw_len, stdin);
 		if (aw_nread == -1)
 		{
 			free(aw_line);
