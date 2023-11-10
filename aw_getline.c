@@ -9,15 +9,14 @@
  * aw_getline - a custom getline function by Ahmed & Wissal.
  * @lineptr: The pointer to buffer.
  * @n: The size of buffer.
- * @stream: The input stream to read from.
+ * @stream: The input stream to read.
  *
  * Return: The number of characters read
  *
- * Description: Reads an entire line from stream, storing the address of the
- * buffer containing the text into *lineptr. The buffer is null-terminated and
- * includes the newline character, if one was found.
+ * Description: Reads an entire line from stream
  */
-ssize_t aw_getline(char **lineptr, size_t *n, FILE *stream) {
+ssize_t aw_getline(char **lineptr, size_t *n, FILE *stream)
+{
 	static char aw_buffer[AW_READ_SIZE];
 	static ssize_t aw_buffer_size = 0;
 	static char *aw_next = NULL;
@@ -25,14 +24,14 @@ ssize_t aw_getline(char **lineptr, size_t *n, FILE *stream) {
 	ssize_t aw_total_size = 0;
 
 	if (lineptr == NULL || n == NULL || stream == NULL) {
-		return -1;
+		return (-1);
 	}
 
 	if (*lineptr == NULL) {
 		*n = AW_READ_SIZE;
 		*lineptr = malloc(*n);
 		if (*lineptr == NULL) {
-			return -1;
+			return (-1);
 		}
 	}
 
@@ -44,7 +43,7 @@ ssize_t aw_getline(char **lineptr, size_t *n, FILE *stream) {
 			aw_bytes_read = read(fileno(stream), aw_buffer, AW_READ_SIZE);
 			if (aw_bytes_read <= 0) {
 				if (aw_total_size == 0) {
-					return -1;
+					return (-1);
 				}
 				break;
 			}
@@ -59,7 +58,7 @@ ssize_t aw_getline(char **lineptr, size_t *n, FILE *stream) {
 			*n = aw_total_size + aw_line_length + 1;
 			char *aw_new_lineptr = realloc(*lineptr, *n);
 			if (aw_new_lineptr == NULL) {
-				return -1;
+				return (-1);
 			}
 			*lineptr = aw_new_lineptr;
 			aw_ptr = aw_new_lineptr + aw_total_size;
@@ -79,5 +78,5 @@ ssize_t aw_getline(char **lineptr, size_t *n, FILE *stream) {
 	}
 
 	*aw_ptr = '\0';
-	return aw_total_size;
+	return (aw_total_size);
 }
