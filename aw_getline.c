@@ -1,7 +1,10 @@
+#include <stdio.h>
+#include <stddef.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
 #include "shell.h"
+
 
 #define AW_READ_SIZE 1024
 
@@ -21,6 +24,10 @@ ssize_t aw_getline(char **lineptr, size_t *n, FILE *stream)
 	static ssize_t aw_buffer_size = 0;
 	static char *aw_next = NULL;
 	char *aw_ptr;
+	char *aw_newline = NULL;
+	char *aw_new_lineptr;
+	ssize_t aw_bytes_read;
+	size_t aw_line_length;
 	ssize_t aw_total_size = 0;
 
 	if (lineptr == NULL || n == NULL || stream == NULL) {
@@ -36,9 +43,7 @@ ssize_t aw_getline(char **lineptr, size_t *n, FILE *stream)
 	}
 
 	aw_ptr = *lineptr;
-
 	while (1) {
-		ssize_t aw_bytes_read;
 		if (aw_next == NULL) {
 			aw_bytes_read = read(fileno(stream), aw_buffer, AW_READ_SIZE);
 			if (aw_bytes_read <= 0) {
@@ -47,16 +52,17 @@ ssize_t aw_getline(char **lineptr, size_t *n, FILE *stream)
 				}
 				break;
 			}
-			aw_buffer_size = aw_bytes_read;
+			aw_buffer_size = (size_t)aw_bytes_read; /* Cast aw_bytes_read to size_t */
 			aw_next = aw_buffer;
 		}
 
-		char *aw_newline = memchr(aw_next, '\n', aw_buffer_size);
-		ssize_t aw_line_length = aw_newline ? (aw_newline - aw_next + 1) : aw_buffer_size;
+		aw_newline = memchr(aw_next, '\n', aw_buffer_size);
+		/* Ensure that all expressions in the ternary operator have the same type (size_t) */
+		aw_line_length = aw_newline ? (size_t)(aw_newline - aw_next + 1) : (size_t)aw_buffer_size;
 
-		if (aw_total_size + aw_line_length + 1 > *n) {
-			*n = aw_total_size + aw_line_length + 1;
-			char *aw_new_lineptr = realloc(*lineptr, *n);
+		if ((size_t)aw_total_size + aw_line_length + 1 > *n) {
+			*n = (size_t)aw_total_size + aw_line_length + 1;
+			aw_new_lineptr = realloc(*lineptr, *n);
 			if (aw_new_lineptr == NULL) {
 				return (-1);
 			}
@@ -65,7 +71,7 @@ ssize_t aw_getline(char **lineptr, size_t *n, FILE *stream)
 		}
 
 		memcpy(aw_ptr, aw_next, aw_line_length);
-		aw_total_size += aw_line_length;
+		aw_total_size += (ssize_t)aw_line_length; /* Cast aw_line_length to ssize_t */
 		aw_ptr += aw_line_length;
 
 		if (aw_newline) {
@@ -78,5 +84,5 @@ ssize_t aw_getline(char **lineptr, size_t *n, FILE *stream)
 	}
 
 	*aw_ptr = '\0';
-	return (aw_total_size);
+	return aw_total_size;
 }
