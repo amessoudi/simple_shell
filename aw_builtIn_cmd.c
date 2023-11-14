@@ -29,14 +29,14 @@ void aw_exitCmd(char **args)
 
 void aw_envCmd(char **args)
 {
-	(void)args;
 	extern char **environ;
 	char **awenv;
 
+	(void)args;
 	for (awenv = environ; *awenv; awenv++)
 	{
 	   write(STDOUT_FILENO, *awenv, strlen(*awenv));
-		write(STDOUT_FILENO, "\n", 1);
+	   write(STDOUT_FILENO, "\n", 1);
 	}
 }
 
@@ -47,7 +47,7 @@ void aw_envCmd(char **args)
 void aw_executeCmd(char *command, char **args)
 {
 	int i;
-	for (int i = 0; i < NUM_BUILT_IN_CMDS; i++)
+	for (i = 0; i < NUM_BUILT_IN_CMDS; i++)
 	{
 		if (strcmp(command, aw_builtInCommands[i].cmd) == 0)
 		{
@@ -65,6 +65,7 @@ void aw_cdCmd(char **args)
 	char *oldpwd = getenv("OLDPWD");
 	char *pwd = getenv("PWD");
 	char *targetDir = args[1];
+	char currentDir[1024];
 
 	if (targetDir == NULL)
 	{
@@ -99,7 +100,6 @@ void aw_cdCmd(char **args)
 		setenv("OLDPWD", pwd, 1);
 	}
 
-	char currentDir[1024];
 
 	if (getcwd(currentDir, sizeof(currentDir)) != NULL)
 	{
