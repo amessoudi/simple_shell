@@ -15,8 +15,7 @@ void aw_envCmd(char **args);
  *@args: argument of the function pointer
 */
 
-struct aw_BuiltInCmd aw_builtInCommands[] =
-{
+struct aw_BuiltInCmd aw_builtInCommands[] = {
 	{"exit", aw_exitCmd},
 	{"env", aw_envCmd},
 	{"cd", aw_cdCmd},
@@ -24,7 +23,7 @@ struct aw_BuiltInCmd aw_builtInCommands[] =
 
 /**
  * aw_exitCmd - exit function
- * @args: arguments 
+ *@args: arguments
 */
 
 void aw_exitCmd(char **args)
@@ -40,14 +39,13 @@ void aw_exitCmd(char **args)
 
 void aw_envCmd(char **args)
 {
-	extern char **environ;
 	char **awenv;
 
 	(void)args;
 	for (awenv = environ; *awenv; awenv++)
 	{
-	   write(STDOUT_FILENO, *awenv, strlen(*awenv));
-	   write(STDOUT_FILENO, "\n", 1);
+		write(STDOUT_FILENO, *awenv, strlen(*awenv));
+		write(STDOUT_FILENO, "\n", 1);
 	}
 }
 
@@ -60,6 +58,7 @@ void aw_envCmd(char **args)
 void aw_executeCmd(char *command, char **args)
 {
 	int i;
+
 	for (i = 0; i < NUM_BUILT_IN_CMDS; i++)
 	{
 		if (strcmp(command, aw_builtInCommands[i].cmd) == 0)

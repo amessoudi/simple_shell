@@ -13,6 +13,13 @@ extern char **environ;
 ssize_t aw_getline(char **lineptr, size_t *n, FILE *stream);
 int aw_execute_command(char *aw_cmd, char **aw_args);
 void aw_cdCmd(char **args);
+/**
+ * struct aw_BuiltInCmd - represent built-in commands and
+ * their functions
+ *@cmd: the built-in command
+ *@awfunction: function pointer to the function for a command
+ *@args: argument of the function pointer
+*/
 struct aw_BuiltInCmd
 {
 	char *cmd;

@@ -30,24 +30,31 @@ ssize_t aw_getline(char **lineptr, size_t *n, FILE *stream)
 	size_t aw_line_length;
 	ssize_t aw_total_size = 0;
 
-	if (lineptr == NULL || n == NULL || stream == NULL) {
+	if (lineptr == NULL || n == NULL || stream == NULL)
+	{
 		return (-1);
 	}
 
-	if (*lineptr == NULL) {
+	if (*lineptr == NULL)
+	{
 		*n = AW_READ_SIZE;
 		*lineptr = malloc(*n);
-		if (*lineptr == NULL) {
+		if (*lineptr == NULL)
+		{
 			return (-1);
 		}
 	}
 
 	aw_ptr = *lineptr;
-	while (1) {
-		if (aw_next == NULL) {
+	while (1)
+	{
+		if (aw_next == NULL)
+		{
 			aw_bytes_read = read(fileno(stream), aw_buffer, AW_READ_SIZE);
-			if (aw_bytes_read <= 0) {
-				if (aw_total_size == 0) {
+			if (aw_bytes_read <= 0)
+			{
+				if (aw_total_size == 0)
+				{
 					return (-1);
 				}
 				break;
@@ -57,7 +64,6 @@ ssize_t aw_getline(char **lineptr, size_t *n, FILE *stream)
 		}
 
 		aw_newline = memchr(aw_next, '\n', aw_buffer_size);
-		/* Ensure that all expressions in the ternary operator have the same type (size_t) */
 		aw_line_length = aw_newline ? (size_t)(aw_newline - aw_next + 1) : (size_t)aw_buffer_size;
 
 		if ((size_t)aw_total_size + aw_line_length + 1 > *n)
@@ -76,7 +82,7 @@ ssize_t aw_getline(char **lineptr, size_t *n, FILE *stream)
 		aw_total_size += (ssize_t)aw_line_length; /* Cast aw_line_length to ssize_t */
 		aw_ptr += aw_line_length;
 
-		if (aw_newline) 
+		if (aw_newline)
 		{
 			aw_next = aw_newline + 1;
 			aw_buffer_size -= aw_line_length;
