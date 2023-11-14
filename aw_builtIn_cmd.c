@@ -1,5 +1,5 @@
 #include "shell.h"
-
+#define NUM_BUILT_IN_CMDS 3
 /*structure for built-In commands */
 
 
@@ -47,7 +47,7 @@ void aw_envCmd(char **args)
 void aw_executeCmd(char *command, char **args)
 {
 	int i;
-	for (i = 0; i < (int)(sizeof(aw_builtInCommands) / sizeof(aw_builtInCommands[0])); i++)
+	for (int i = 0; i < NUM_BUILT_IN_CMDS; i++)
 	{
 		if (strcmp(command, aw_builtInCommands[i].cmd) == 0)
 		{
@@ -56,44 +56,57 @@ void aw_executeCmd(char *command, char **args)
 		}
 	}
 }
-
-void aw_cdCmd(char **args) {
+/**
+ * aw_exitCmd - exit function
+*/
+void aw_cdCmd(char **args)
+{
 	char *homeDir = getenv("HOME");
 	char *oldpwd = getenv("OLDPWD");
 	char *pwd = getenv("PWD");
 	char *targetDir = args[1];
 
-	if (targetDir == NULL) {
-		if (homeDir == NULL) {
+	if (targetDir == NULL)
+	{
+		if (homeDir == NULL)
+		{
 			fprintf(stderr, "./hsh: 1: cd: HOME not set\n");
 			return;
 		}
 		targetDir = homeDir;
-	} else if (strcmp(targetDir, "-") == 0) {
-		if (oldpwd == NULL) {
+	}
+	else if (strcmp(targetDir, "-") == 0)
+		{
+		if (oldpwd == NULL)
+		{
 			fprintf(stderr, "./hsh: 1: cd: OLDPWD not set\n");
 			return;
 		}
 		targetDir = oldpwd;
-		printf("%s\n", targetDir);  // This prints the new directory, as is typical with 'cd -'
+		printf("%s\n", targetDir);
 	}
 
-	// Attempt to change directory
-	if (chdir(targetDir) != 0) {
-		// Use fprintf to match the expected error message format
+
+	if (chdir(targetDir) != 0)
+	{
 		fprintf(stderr, "./hsh: 1: cd: can't cd to %s\n", targetDir);
 		return;
 	}
 
-	// Update OLDPWD and PWD environment variables
-	if (pwd != NULL) {
+
+	if (pwd != NULL)
+	{
 		setenv("OLDPWD", pwd, 1);
 	}
 
 	char currentDir[1024];
-	if (getcwd(currentDir, sizeof(currentDir)) != NULL) {
+
+	if (getcwd(currentDir, sizeof(currentDir)) != NULL)
+	{
 		setenv("PWD", currentDir, 1);
-	} else {
+	}
+	else
+	{
 		perror("getcwd");
 	}
 }

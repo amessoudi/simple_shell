@@ -11,7 +11,8 @@ int aw_execute_command(char *aw_cmd, char **aw_args)
 {
 	for (int i = 0; i < NUM_BUILT_IN_CMDS; i++)
 	{
-		if (strcmp(aw_cmd, aw_builtInCommands[i].cmd) == 0) {
+		if (strcmp(aw_cmd, aw_builtInCommands[i].cmd) == 0)
+		{
 
 			aw_builtInCommands[i].awfunction(aw_args);
 
