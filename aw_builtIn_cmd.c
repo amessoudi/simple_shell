@@ -57,36 +57,35 @@ void aw_executeCmd(char *command, char **args)
 	}
 }
 
-void aw_cdCmd(char **args)
-{
+void aw_cdCmd(char **args) {
 	char *homeDir = getenv("HOME");
 	char *oldpwd = getenv("OLDPWD");
 	char *pwd = getenv("PWD");
 	char *targetDir = args[1];
 
-
 	if (targetDir == NULL) {
 		if (homeDir == NULL) {
-			perror("cd: HOME not set");
+			fprintf(stderr, "./hsh: 1: cd: HOME not set\n");
 			return;
 		}
 		targetDir = homeDir;
 	} else if (strcmp(targetDir, "-") == 0) {
 		if (oldpwd == NULL) {
-			perror("cd: OLDPWD not set");
+			fprintf(stderr, "./hsh: 1: cd: OLDPWD not set\n");
 			return;
 		}
 		targetDir = oldpwd;
-		printf("%s\n", targetDir);
+		printf("%s\n", targetDir);  // This prints the new directory, as is typical with 'cd -'
 	}
 
-
+	// Attempt to change directory
 	if (chdir(targetDir) != 0) {
-		perror("cd");
+		// Use fprintf to match the expected error message format
+		fprintf(stderr, "./hsh: 1: cd: can't cd to %s\n", targetDir);
 		return;
 	}
 
-
+	// Update OLDPWD and PWD environment variables
 	if (pwd != NULL) {
 		setenv("OLDPWD", pwd, 1);
 	}
