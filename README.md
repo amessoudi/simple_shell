@@ -1,6 +1,6 @@
 # Simple Shell Project
 
-Hey there! 👋 Welcome to our second project in the ALX SE foundations - the Simple Shell project!
+ welcome to - the Simple Shell project!
 
 ## Overview
 
@@ -47,11 +47,13 @@ For our first step, we:
 7. Waited patiently for the child to complete with `waitpid`.
 8. Displayed the output, returned the prompt, and gracefully exited with a wave or a Ctrl+D dance.
 
-This framework laid the foundation for us to easily add more cool features based on the tasks at hand.
+This framework laid the foundation for us to easily add more features based on the tasks at hand.
 
 ## Overall Experience
 
 this project was a rollercoaster of learning. We teamed up, we delved deep into the intricacies of shells, faced challenges head-on, and emerged with a newfound understanding. It was tough but incredibly rewarding - a journey worth taking.
 
-Ready to explore your own shell adventures? Dive in and happy coding! 🚀✨
+---
+
+*Created by Wissal Leknouch and Ahmed Messoudi* ✨
 
