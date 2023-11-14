@@ -1,5 +1,5 @@
 #include "shell.h"
-
+#define NUM_BUILT_IN_CMDS 3
 /**
  * aw_execute_command - executes the command
  * @aw_cmd: the command to execute
@@ -9,6 +9,15 @@
  */
 int aw_execute_command(char *aw_cmd, char **aw_args)
 {
+	for (int i = 0; i < NUM_BUILT_IN_CMDS; i++)
+	{
+		if (strcmp(aw_cmd, aw_builtInCommands[i].cmd) == 0) {
+
+			aw_builtInCommands[i].awfunction(aw_args);
+
+		}
+	}
+
 	pid_t aw_pid;
 	int aw_status;
 

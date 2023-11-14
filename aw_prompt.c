@@ -62,9 +62,13 @@ int main(int argc, char *argv[])
             }
 			else if (strcmp(aw_args[0], "env") == 0)
 			{
-                aw_envCmd();
+                aw_envCmd(aw_args);
             }
-			else
+            else if (strcmp(aw_args[0], "cd") == 0)
+            {
+                aw_cdCmd(aw_args);
+            }
+            else
 			{
 
 		if (aw_args[0])
