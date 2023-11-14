@@ -7,13 +7,6 @@ void aw_exitCmd(char **args);
 void aw_envCmd(char **args);
 
 
-/**
- * struct aw_BuiltInCmd - represent built-in commands and
- * their functions
- *@cmd: the built-in command
- *@awfunction: function pointer to the function for a command
- *@args: argument of the function pointer
-*/
 
 struct aw_BuiltInCmd aw_builtInCommands[] = {
 	{"exit", aw_exitCmd},
