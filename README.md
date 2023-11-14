@@ -8,7 +8,7 @@ In this adventure, we're diving into the world of shell programming. The project
 
 ### Mandatory Tasks:
 
-1. **UNIX Command Line Interpreter:** Yep, we're building our own!
+1. **UNIX Command Line Interpreter:** Yep,we are building our own shell :)
 2. **Tokenize:** Because handling words is our thing.
 3. **Handle PATH:** Navigating the system like a pro.
 4. **Built-in Command Exit:** Exiting with style.
