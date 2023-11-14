@@ -64,19 +64,33 @@ void aw_cdCmd(char **args)
 	char *pwd = getenv("PWD");
 	char *targetDir = args[1];
 
+
 	if (targetDir == NULL) {
+		if (homeDir == NULL) {
+			perror("cd: HOME not set");
+			return;
+		}
 		targetDir = homeDir;
 	} else if (strcmp(targetDir, "-") == 0) {
+		if (oldpwd == NULL) {
+			perror("cd: OLDPWD not set");
+			return;
+		}
 		targetDir = oldpwd;
 		printf("%s\n", targetDir);
 	}
+
 
 	if (chdir(targetDir) != 0) {
 		perror("cd");
 		return;
 	}
 
-	setenv("OLDPWD", pwd, 1);
+
+	if (pwd != NULL) {
+		setenv("OLDPWD", pwd, 1);
+	}
+
 	char currentDir[1024];
 	if (getcwd(currentDir, sizeof(currentDir)) != NULL) {
 		setenv("PWD", currentDir, 1);
