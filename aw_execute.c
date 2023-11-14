@@ -7,11 +7,13 @@
  *
  * Return: 1 on success, or error code
  */
+int aw_execute_command(char *aw_cmd, char **aw_args)
+{
 	int i;
 	pid_t aw_pid;
 	int aw_status;
 
-	for (i = 0; i < NUM_BUILT_IN_CMDS; i++)
+	for (i = 0; i < (NUM_BUILT_IN_CMDS); i++)
 	{
 		if (strcmp(aw_cmd, aw_builtInCommands[i].cmd) == 0)
 		{
