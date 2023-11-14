@@ -60,10 +60,12 @@ ssize_t aw_getline(char **lineptr, size_t *n, FILE *stream)
 		/* Ensure that all expressions in the ternary operator have the same type (size_t) */
 		aw_line_length = aw_newline ? (size_t)(aw_newline - aw_next + 1) : (size_t)aw_buffer_size;
 
-		if ((size_t)aw_total_size + aw_line_length + 1 > *n) {
+		if ((size_t)aw_total_size + aw_line_length + 1 > *n)
+		{
 			*n = (size_t)aw_total_size + aw_line_length + 1;
 			aw_new_lineptr = realloc(*lineptr, *n);
-			if (aw_new_lineptr == NULL) {
+			if (aw_new_lineptr == NULL)
+			{
 				return (-1);
 			}
 			*lineptr = aw_new_lineptr;
@@ -74,15 +76,18 @@ ssize_t aw_getline(char **lineptr, size_t *n, FILE *stream)
 		aw_total_size += (ssize_t)aw_line_length; /* Cast aw_line_length to ssize_t */
 		aw_ptr += aw_line_length;
 
-		if (aw_newline) {
+		if (aw_newline) 
+		{
 			aw_next = aw_newline + 1;
 			aw_buffer_size -= aw_line_length;
 			break;
-		} else {
+		}
+		else
+		{
 			aw_next = NULL;
 		}
 	}
 
 	*aw_ptr = '\0';
-	return aw_total_size;
+	return (aw_total_size);
 }

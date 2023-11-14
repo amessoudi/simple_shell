@@ -15,6 +15,7 @@ struct aw_BuiltInCmd aw_builtInCommands[] = {
 
 /**
  * aw_exitCmd - exit function
+ * @args: arguments 
 */
 
 void aw_exitCmd(char **args)
@@ -25,6 +26,7 @@ void aw_exitCmd(char **args)
 
 /**
  * aw_envCmd - env function
+ * @args: arguments
  */
 
 void aw_envCmd(char **args)
@@ -42,6 +44,8 @@ void aw_envCmd(char **args)
 
 /**
  * aw_executeCmd - execute a built-In command function
+ * @command: a command
+ * @args: arguments
  */
 
 void aw_executeCmd(char *command, char **args)
@@ -57,7 +61,8 @@ void aw_executeCmd(char *command, char **args)
 	}
 }
 /**
- * aw_exitCmd - exit function
+ * aw_cdCmd - cd function
+ * @args: arguments
 */
 void aw_cdCmd(char **args)
 {
