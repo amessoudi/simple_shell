@@ -67,45 +67,37 @@ void aw_executeCmd(char *command, char **args)
 */
 void aw_cdCmd(char **args)
 {
-	char *homeDir = getenv("HOME");
-	char *oldpwd = getenv("OLDPWD");
-	char *pwd = getenv("PWD");
-	char *targetDir = args[1];
+	char *homeDir, *oldpwd, *pwd, *targetDir;
 	char currentDir[1024];
+
+	homeDir = getenv("HOME");
+	oldpwd = getenv("OLDPWD");
+	pwd = getenv("PWD");
+	targetDir = args[1];
 
 	if (targetDir == NULL)
 	{
-		if (homeDir == NULL)
-		{
-			fprintf(stderr, "./hsh: 1: cd: HOME not set\n");
-			return;
-		}
-		targetDir = homeDir;
+		targetDir = homeDir ? homeDir : pwd; /* Use PWD if HOME is not set */
 	}
 	else if (strcmp(targetDir, "-") == 0)
+	{
+		targetDir = oldpwd ? oldpwd : pwd; /* Use PWD if OLDPWD is not set */
+		if (targetDir)
 		{
-		if (oldpwd == NULL)
-		{
-			fprintf(stderr, "./hsh: 1: cd: OLDPWD not set\n");
-			return;
+			printf("%s\n", targetDir);
 		}
-		targetDir = oldpwd;
-		printf("%s\n", targetDir);
 	}
 
-
-	if (chdir(targetDir) != 0)
+	if (targetDir && chdir(targetDir) != 0)
 	{
 		fprintf(stderr, "./hsh: 1: cd: can't cd to %s\n", targetDir);
 		return;
 	}
 
-
-	if (pwd != NULL)
+	if (pwd)
 	{
 		setenv("OLDPWD", pwd, 1);
 	}
-
 
 	if (getcwd(currentDir, sizeof(currentDir)) != NULL)
 	{
